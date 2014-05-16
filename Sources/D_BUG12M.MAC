@@ -1,0 +1,37 @@
+;*************************************************************************
+;*                                                                       *      
+;*  Définition de macros pour des appels simples en assembleur           *  
+;*                                                                       *      
+;*                                                                       *      
+;*                                                                       *      
+;*                                                                       *      
+;*  Fontions: getchar, putchar, out2hex, out4hex, printf                 *          
+;*                                                                       *      
+;*************************************************************************
+
+
+
+getchar:    macro
+            jsr     [jgetchar,pcr]  ; retourne le caractère dans le registre b
+            endm
+          
+putchar:    macro                   ; l'argument est le caractère ascii à transmettre
+                  					; chargé dans b
+            jsr     [jputchar,pcr]  ; le caractère transmis est retourné dans b
+            endm
+          
+out2hex:    macro   				; l'argument est un octet en hex
+            ldab    \1              ; chargé l'argument dans b
+            jsr     [jout2hex,pcr]  ; envoyer l'octet en ascii au terminal         
+            endm
+          
+out4hex:    macro   				; l'argument est un mot en hex
+            ldd     \1              ; chargé l'argument dans bd
+            jsr     [jout4hex,pcr]  ; envoyer le mot en ascii au terminal         
+            endm
+          
+printf:     macro					; l'argument est l'adresse de départ
+            ldd     \1              ; chargé l'argument dans d
+            jsr     [jprintf,pcr]   ; envoyer la phrase au terminal 
+            endm     
+            
